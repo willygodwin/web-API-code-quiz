@@ -22,6 +22,9 @@ var timePenalty = 10;
 var secondsElapsed = 0;
 var isNotCorrect = false; 
 
+var minutesDisplay = document.querySelector(".minutes-display");
+var secondsDisplay = document.querySelector(".seconds-display");
+
 function questionIndex(){
     return Math.ceil(Math.random()* 10);
 }
@@ -29,9 +32,9 @@ function questionIndex(){
 function startTimer(){
 
 
-        if(interval != null){
-          return;
-        }
+        // if(interval != null){
+        //   return;
+        // }
 
         
         interval = setInterval(function () {
@@ -42,8 +45,8 @@ function startTimer(){
             var secondsLeft = totalTimeLeft % 60;
         
         //   Need to set the timer in the nav bar
-        //   minutesDisplay.textContent = minutesLeft;
-        //   secondsDisplay.textContent = secondsLeft;
+            minutesDisplay.textContent = minutesLeft;
+            secondsDisplay.textContent = secondsLeft;
 
             //if the answer is wrong need to penalise 10 seconds 
             if(isNotCorrect) {
@@ -51,8 +54,8 @@ function startTimer(){
                 var minutesLeft = Math.floor(totalTimeLeft/60);
                 var secondsLeft = totalTimeLeft % 60;
             //   set nav bar timer 
-            //   minutesDisplay.textContent = minutesLeft;
-            //   secondsDisplay.textContent = secondsLeft;
+                minutesDisplay.textContent = minutesLeft;
+                secondsDisplay.textContent = secondsLeft;
                 isNotCorrect = false; 
 
             }
@@ -61,10 +64,17 @@ function startTimer(){
                 alert("Times Up!");
                 clearInterval(interval);
                 interval = null;
+
+                minutesDisplay.textContent = minutesLeft;
+                secondsDisplay.textContent = "00";
+            }
       
         }, 1000);
-      }
+      
 
 }
 
+document.querySelector(".start-quiz").addEventListener("click", startTimer)
+
+// $(".start-quiz").on("click", startTimer);
 
