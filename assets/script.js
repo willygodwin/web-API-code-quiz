@@ -17,4 +17,54 @@ var answer = {
 
 };
 
+var secondsTotal = 120;
+var timePenalty = 10;
+var secondsElapsed = 0;
+var isNotCorrect = false; 
+
+function questionIndex(){
+    return Math.ceil(Math.random()* 10);
+}
+
+function startTimer(){
+
+
+        if(interval != null){
+          return;
+        }
+
+        
+        interval = setInterval(function () {
+            secondsElapsed = secondsElapsed + 1; 
+      
+            var totalTimeLeft = secondsTotal - secondsElapsed;
+            var minutesLeft = Math.floor(totalTimeLeft/60);
+            var secondsLeft = totalTimeLeft % 60;
+        
+        //   Need to set the timer in the nav bar
+        //   minutesDisplay.textContent = minutesLeft;
+        //   secondsDisplay.textContent = secondsLeft;
+
+            //if the answer is wrong need to penalise 10 seconds 
+            if(isNotCorrect) {
+                totalTimeLeft = secondsTotal - timePenalty;
+                var minutesLeft = Math.floor(totalTimeLeft/60);
+                var secondsLeft = totalTimeLeft % 60;
+            //   set nav bar timer 
+            //   minutesDisplay.textContent = minutesLeft;
+            //   secondsDisplay.textContent = secondsLeft;
+                isNotCorrect = false; 
+
+            }
+      
+            if(minutesLeft === 0 && secondsLeft === 0) {
+                alert("Times Up!");
+                clearInterval(interval);
+                interval = null;
+      
+        }, 1000);
+      }
+
+}
+
 
