@@ -2,6 +2,9 @@ h1 {
     text-align: center;
 }
 
-.button {
+.start {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
