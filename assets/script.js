@@ -1,3 +1,4 @@
+//Global variables contianing quiz contents 
 var questions = [   "Which of the following Attribute is used to include External JS code inside your HTML Document",
                     "Which of the following is not considered as an error in JavaScript?",
                     "The statement a===b refers to",
@@ -38,36 +39,32 @@ var answer =    [   "src",
 
 var questionOrder = [ false, false, false, false, false, false, false, false, false, false];
 
-
+//Global variables for internal use
 var secondsTotal = 120;
 var timePenalty = 9;
 var secondsElapsed = 0;
 var isNotCorrect = false; 
-var isCorrect = false; 
 var score = 0;
 var currentAnswer; 
 var questionCount = 0; 
 
-
+//HTML variables
 var userName; 
 var minutesDisplay = $(".minutes-display");
 var secondsDisplay = $(".seconds-display");
 
-// Get the array of all scores if array is null set to empty array 
+// Get the array of all scores from storage if array is null set to empty array 
 var highScores = JSON.parse(localStorage.getItem("highScores"));
 if(highScores === null){
     highScores = []; 
 }
-
-
-
-console.log(highScores)
 
 // Generate a random question index 
 function questionIndex(){
     return Math.floor(Math.random() * 10)
 }
 
+// Starts timer at the number set by global variable secondsTotal
 function startTimer(){
 
         interval = setInterval(function () {
@@ -100,11 +97,6 @@ function startTimer(){
             if(minutesLeft === 0 && secondsLeft === 0) {
                 alert("Times Up!");
                 quizEnd();
-                // clearInterval(interval);
-                // interval = null;
-
-                // minutesDisplay.text(minutesLeft);
-                // secondsDisplay.text("00");
             }
       
         }, 1000);
@@ -112,19 +104,20 @@ function startTimer(){
 
 }
 
+//Function to populate the highest scores at the end of the quiz
 function scoreList(){
     //sort the scores by highest first
     highScores.sort(function(a, b) {
-        return b[1] - a[1]; //index 1 is the score hence sort by the score 
+        return b[1] - a[1];             //index 1 is the score hence sort by the score 
     });
-    console.log(highScores)
 
-    for(var i = 0 ; i < 5; i ++){
+
+    // Set the top 5 highest scores to the HTML
+    for(var i = 0 ; i < 5; i ++) {
         var a = i + 1; 
         var userID = "#user-" + a;
         var scoreID = "#score-" + a;
-        console.log(userID);
-        console.log(scoreID)
+
         $(userID).text(highScores[i][0]);
         $(scoreID).text(highScores[i][1]);
     }
@@ -132,6 +125,7 @@ function scoreList(){
 
 }
 
+//End of quiz triggered if users finishes or if time ends
 function quizEnd(){ 
     clearInterval(interval);
     interval = null;
@@ -151,6 +145,7 @@ function quizEnd(){
 
 }
 
+// Populates the question with a random question from the global arrays
 function populateQuestion() {
 
     var index; 
@@ -177,19 +172,19 @@ function populateQuestion() {
 
 }
 
+// Function allows the same user to restart the quiz
 function replay(){ 
     //reset global variables
     questionCount = 0; 
     secondsElapsed = 0;
     score = 0;
     questionOrder = [false, false, false, false, false, false, false, false, false, false];
-    
+    // Resart quiz
     startTimer();
     $(".replay").hide();
     $("#highScores").hide();
     populateQuestion();
     $("#question-body").show();
-    console.log(userName);
 }
 
 
@@ -200,8 +195,6 @@ $(".start-quiz").on("click", function() {
     populateQuestion();
     $("#question-body").show();
     userName = $("#user-name").val();
-    console.log(userName);
-
 });
 
 
