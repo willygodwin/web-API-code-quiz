@@ -135,8 +135,8 @@ function quizEnd(){
 
     //hide the questions and show the highest scores
     $("#question-body").hide();
-    $("#user-score").text(score);
     $("#highScores").show();
+    $("#user-score").text(score);
     $(".replay").show();
     $(".resetHighest").show();
     $(".score").text("0");
