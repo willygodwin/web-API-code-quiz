@@ -17,7 +17,7 @@ var answer =    [   "src",
 
 var questionOrder = [ false, false, false, false, false, false, false, false, false, false];
 
-
+var highScores = {}; 
 
 
 var secondsTotal = 120;
@@ -27,11 +27,15 @@ var isNotCorrect = false;
 var isCorrect = false; 
 var score = 0;
 var currentAnswer; 
+var questionCount = 0; 
 
-
-
+//input asking for player name, append name and score to object store object in storage
+var user_name = $(); // Addd input to html
 var minutesDisplay = $(".minutes-display");
 var secondsDisplay = $(".seconds-display");
+
+// set highscores object using local storage set (JSON methods as well string to obejct)
+
 
 
 function questionIndex(){
@@ -82,31 +86,35 @@ function startTimer(){
 function populateQuestion() {
 
     var index; 
-
-    index = Math.floor(Math.random() * 3)
-    
-    while(questionOrder[index]) {
+    if (questionCount < 3){
         index = Math.floor(Math.random() * 3)
+        while(questionOrder[index]) {
+            index = Math.floor(Math.random() * 3)
+        }
+
+        $("#question").text(questions[index]); 
+        $("#button-a").text(answers[index][0]);
+        $("#button-b").text(answers[index][1]);
+        $("#button-c").text(answers[index][2]);
+        $("#button-d").text(answers[index][3]);
+    
+        currentAnswer = answer[index]; 
+        questionOrder[index] = true; 
     }
-    
-    $("#question").text(questions[index]); 
-    $("#button-a").text(answers[index][0]);
-    $("#button-b").text(answers[index][1]);
-    $("#button-c").text(answers[index][2]);
-    $("#button-d").text(answers[index][3]);
-
-    currentAnswer = answer[index]; 
-    questionOrder[index] = true; 
-
-}
-
-function checkAnswer() {
-    
+    else {
+        $("#question-body").hide();
+        $("#start-page").show();
+        $(".score").text("0");
+        highScores.append(user_name, score);
 
 
-    
+    }  
+  
+    questionCount += 1; 
 
 }
+
+
 
 
 
@@ -119,6 +127,7 @@ function checkAnswer() {
     });
 
     $(".btn-secondary").on("click", function(event){
+        
         if(event.target.textContent === currentAnswer) {
             populateQuestion();
             score += 10; 
