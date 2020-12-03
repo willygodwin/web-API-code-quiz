@@ -80,8 +80,8 @@ function startTimer(){
                 clearInterval(interval);
                 interval = null;
 
-                minutesDisplay.textContent = minutesLeft;
-                secondsDisplay.textContent = "00";
+                minutesDisplay.text(minutesLeft);
+                secondsDisplay.text("00");
             }
       
         }, 1000);
@@ -127,6 +127,8 @@ function populateQuestion() {
         questionOrder[index] = true; 
     }
     else {
+        clearInterval(interval);
+        interval = null;
         $("#question-body").hide();
         $("#highScores").show();
         $(".score").text("0");
@@ -135,6 +137,8 @@ function populateQuestion() {
 
         localStorage.setItem("highScores", JSON.stringify(highScores));
         scoreList();
+
+
 
     }  
     questionCount += 1; 
