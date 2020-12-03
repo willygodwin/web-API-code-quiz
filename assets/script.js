@@ -17,8 +17,6 @@ var answer =    [   "src",
 
 var questionOrder = [ false, false, false, false, false, false, false, false, false, false];
 
-// var highScores = []; 
-
 
 var secondsTotal = 120;
 var timePenalty = 9;
@@ -29,37 +27,40 @@ var score = 0;
 var currentAnswer; 
 var questionCount = 0; 
 
-//input asking for player name, append name and score to object store object in storage
-var userName; // Addd input to html
+
+var userName; 
 var minutesDisplay = $(".minutes-display");
 var secondsDisplay = $(".seconds-display");
 
-
+// Get the array of all scores if array is null set to empty array 
 var highScores = JSON.parse(localStorage.getItem("highScores"));
 if(highScores === null){
     highScores = []; 
 }
 
-// set highscores object using local storage set (JSON methods as well string to obejct)
+
 
 console.log(highScores)
 
+// Generate a random question index 
 function questionIndex(){
-    return Math.ceil(Math.random()* 10);
+    return Math.floor(Math.random() * 3)
 }
 
 function startTimer(){
 
         interval = setInterval(function () {
+            
             secondsElapsed = secondsElapsed + 1; 
-      
             var totalTimeLeft = secondsTotal - secondsElapsed;
+            
             //if the answer is wrong need to penalise 10 seconds 
             if(isNotCorrect) {
                 secondsElapsed = secondsElapsed + timePenalty;
                 totalTimeLeft = secondsTotal - secondsElapsed;
                 var minutesLeft = Math.floor(totalTimeLeft/60);
                 var secondsLeft = totalTimeLeft % 60;
+            
             //   set nav bar timer 
                 minutesDisplay.text(minutesLeft);
                 secondsDisplay.text(secondsLeft);
@@ -74,14 +75,15 @@ function startTimer(){
                 secondsDisplay.text(secondsLeft);
             }
             
-      
+            //  if the timer has runn out
             if(minutesLeft === 0 && secondsLeft === 0) {
                 alert("Times Up!");
-                clearInterval(interval);
-                interval = null;
+                quizEnd();
+                // clearInterval(interval);
+                // interval = null;
 
-                minutesDisplay.text(minutesLeft);
-                secondsDisplay.text("00");
+                // minutesDisplay.text(minutesLeft);
+                // secondsDisplay.text("00");
             }
       
         }, 1000);
@@ -105,6 +107,26 @@ function scoreList(){
         $(userID).text(highScores[i][0]);
         $(scoreID).text(highScores[i][1]);
     }
+    $("#user-score").text(score);
+
+}
+
+function quizEnd(){ 
+    clearInterval(interval);
+    interval = null;
+
+    //hide the questions and show the highest scores
+    $("#question-body").hide();
+    $("#highScores").show();
+    $(".replay").show();
+    $(".score").text("0");
+
+    //Add username and score to list of highscores
+    highScores.push([userName, score]); 
+    //Store highscores array in the local storage
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+    //Call the function score list which populates the top 5 highest scores
+    scoreList();
 
 }
 
@@ -112,9 +134,9 @@ function populateQuestion() {
 
     var index; 
     if (questionCount < 3){
-        index = Math.floor(Math.random() * 3)
+        index = questionIndex();
         while(questionOrder[index]) {
-            index = Math.floor(Math.random() * 3)
+            index = questionIndex();
         }
 
         $("#question").text(questions[index]); 
@@ -123,26 +145,28 @@ function populateQuestion() {
         $("#button-c").text(answers[index][2]);
         $("#button-d").text(answers[index][3]);
     
-        currentAnswer = answer[index]; 
-        questionOrder[index] = true; 
+        currentAnswer = answer[index];  //set current answer to the answer index
+        questionOrder[index] = true;    //set question order to true so the questions have been seen. 
     }
     else {
-        clearInterval(interval);
-        interval = null;
-        $("#question-body").hide();
-        $("#highScores").show();
-        $(".score").text("0");
-
-        highScores.push([userName, score]);
-
-        localStorage.setItem("highScores", JSON.stringify(highScores));
-        scoreList();
-
-
+        quizEnd();
 
     }  
     questionCount += 1; 
 
+}
+
+function replay(){ 
+    questionCount = 0; 
+    secondsElapsed = 0;
+    score = 0;
+    questionOrder = [ false, false, false, false, false, false, false, false, false, false];
+    startTimer();
+    $(".replay").hide();
+    $("#highScores").hide();
+    populateQuestion();
+    $("#question-body").show();
+    console.log(userName);
 }
 
 
@@ -168,11 +192,10 @@ $(".btn-secondary").on("click", function(event){
         isNotCorrect = true; 
         score -= 5; 
         $(".score").text(score)
-
     }
-}
-);
+});
 
+$(".replay").on("click", replay);
     
     
 

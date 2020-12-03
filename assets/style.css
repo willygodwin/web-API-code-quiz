@@ -38,6 +38,10 @@ h1 {
     display: none;
 }
 
+.replay {
+    display: none;
+}
+
 .btn-secondary {
     text-align: left;
 }
