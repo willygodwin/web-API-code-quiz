@@ -12,6 +12,5 @@ Questions -
 Highscores - 
 ![Alt text](/assets/Screenshots/Highscores.JPG?raw=true "Highscores")
 
-
 URL to deployed Website:
-
+https://willygodwin.github.io/web-API-code-quiz/
