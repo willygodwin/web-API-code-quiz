@@ -21,14 +21,18 @@ var questionOrder = [ false, false, false, false, false, false, false, false, fa
 
 
 var secondsTotal = 120;
-var timePenalty = 10;
+var timePenalty = 9;
 var secondsElapsed = 0;
 var isNotCorrect = false; 
 var isCorrect = false; 
+var score = 0;
 var currentAnswer; 
+
+
 
 var minutesDisplay = $(".minutes-display");
 var secondsDisplay = $(".seconds-display");
+
 
 function questionIndex(){
     return Math.ceil(Math.random()* 10);
@@ -42,7 +46,8 @@ function startTimer(){
             var totalTimeLeft = secondsTotal - secondsElapsed;
             //if the answer is wrong need to penalise 10 seconds 
             if(isNotCorrect) {
-                totalTimeLeft = secondsTotal - timePenalty;
+                secondsElapsed = secondsElapsed + timePenalty;
+                totalTimeLeft = secondsTotal - secondsElapsed;
                 var minutesLeft = Math.floor(totalTimeLeft/60);
                 var secondsLeft = totalTimeLeft % 60;
             //   set nav bar timer 
@@ -116,10 +121,13 @@ function checkAnswer() {
     $(".btn-secondary").on("click", function(event){
         if(event.target.textContent === currentAnswer) {
             populateQuestion();
-            isCorrect = true; 
+            score += 10; 
+            $(".score").text(score)
         }
         else {
             isNotCorrect = true; 
+            score -= 5; 
+            $(".score").text(score)
 
         }
     }
