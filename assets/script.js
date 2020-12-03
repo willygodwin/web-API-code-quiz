@@ -97,6 +97,8 @@ function startTimer(){
             if(minutesLeft === 0 && secondsLeft === 0) {
                 alert("Times Up!");
                 quizEnd();
+                minutesDisplay.text("0");
+                secondsDisplay.text("00");
             }
       
         }, 1000);
@@ -134,6 +136,7 @@ function quizEnd(){
     $("#question-body").hide();
     $("#highScores").show();
     $(".replay").show();
+    $(".resetHighest").show();
     $(".score").text("0");
 
     //Add username and score to list of highscores
@@ -179,12 +182,12 @@ function replay(){
     secondsElapsed = 0;
     score = 0;
     questionOrder = [false, false, false, false, false, false, false, false, false, false];
-    // Resart quiz
-    startTimer();
+    
+    // Restart quiz
     $(".replay").hide();
+    $(".resetHighest").hide();
     $("#highScores").hide();
-    populateQuestion();
-    $("#question-body").show();
+    $("#start-page").show();
 }
 
 
@@ -203,18 +206,36 @@ $(".btn-secondary").on("click", function(event){
     
     if(event.target.textContent === currentAnswer) {
         score += 10; 
-        $(".score").text(score)
+        $(".score").text(score);
+        $("#wrong").text("");
         populateQuestion();
     }
     else {
         isNotCorrect = true; 
         score -= 5; 
-        $(".score").text(score)
+        $(".score").text(score);
+        $("#wrong").text("Wrong please try again");
     }
 });
 
 // Click on replay button
 $(".replay").on("click", replay);
+
+
+//Reset the list of highest scores
+$(".resetHighest").on("click", function(){
+    localStorage.setItem("highScores", "");
+    highScores = []; 
+    for(var i = 0 ; i < 5; i ++) {
+        var a = i + 1; 
+        var userID = "#user-" + a;
+        var scoreID = "#score-" + a;
+
+        $(userID).text(localStorage.getItem("highScores"));
+        $(scoreID).text(localStorage.getItem("highScores"));
+    }
+});
+
     
     
 
