@@ -1,17 +1,38 @@
 var questions = [   "Which of the following Attribute is used to include External JS code inside your HTML Document",
                     "Which of the following is not considered as an error in JavaScript?",
-                    "The statement a===b refers to"
+                    "The statement a===b refers to",
+                    "Which of the following are affected by hoisting?",
+                    "Which of the following is not a javascript data-type?",
+                    "When interpreter encounters an empty statements, what it will do:",
+                    "The 'function' and 'var' are known as:",
+                    "Which type of JavaScript language is ___",
+                    "Inside which HTML element do we put the JavaScript?",
+                    "How do you write 'Hello World' in an alert box?",
                 ];
 
 
 var answers =   [   ["src", "ext", "script", "link"],
                     ["Syntax error", "Missing semi-colons", "Division By zero", "All of the above"],
-                    ["Both a and b are equal in value, type and reference address", "Both a and b are equal in value", "Both a and b are equal in value and type", "There is no such statement"]
+                    ["Both a and b are equal in value, type and reference address", "Both a and b are equal in value", "Both a and b are equal in value and type", "There is no such statement"],
+                    ["const", "var", "let", "All of the above"],
+                    ["string", "number", "boolean", "hashtable"],
+                    ["Shows a warning", "Prompts to complete the statement", "Throws an error", "Ignores the statements"],
+                    ["Keywords", "Data types", "Declaration statements", "Prototypes"],
+                    ["Object-Oriented", "Object-Based", "Assembly-language", "High-level"],
+                    ["<js>", "<scripting>", "<javascript>", "<script>"],
+                    ["alert('Hello World')", "msgBox('Hello World')", "msg('Hellow World')", "alertBox('Hello World')"]
                 ]; 
 
 var answer =    [   "src",
                     "Division By zero", 
-                    "Both a and b are equal in value and type"
+                    "Both a and b are equal in value and type",
+                    "var",
+                    "hashtable",
+                    "Ignores the statements",
+                    "Declaration statements", 
+                    "Object-Based", 
+                    "<script>", 
+                    "alert('Hello World')"
                 ];
 
 
@@ -44,7 +65,7 @@ console.log(highScores)
 
 // Generate a random question index 
 function questionIndex(){
-    return Math.floor(Math.random() * 3)
+    return Math.floor(Math.random() * 10)
 }
 
 function startTimer(){
@@ -92,10 +113,10 @@ function startTimer(){
 }
 
 function scoreList(){
-    
+    //sort the scores by highest first
     highScores.sort(function(a, b) {
-        return b[1] - a[1];
-});
+        return b[1] - a[1]; //index 1 is the score hence sort by the score 
+    });
     console.log(highScores)
 
     for(var i = 0 ; i < 5; i ++){
@@ -133,7 +154,7 @@ function quizEnd(){
 function populateQuestion() {
 
     var index; 
-    if (questionCount < 3){
+    if (questionCount < 10){
         index = questionIndex();
         while(questionOrder[index]) {
             index = questionIndex();
@@ -157,10 +178,12 @@ function populateQuestion() {
 }
 
 function replay(){ 
+    //reset global variables
     questionCount = 0; 
     secondsElapsed = 0;
     score = 0;
-    questionOrder = [ false, false, false, false, false, false, false, false, false, false];
+    questionOrder = [false, false, false, false, false, false, false, false, false, false];
+    
     startTimer();
     $(".replay").hide();
     $("#highScores").hide();
@@ -170,7 +193,7 @@ function replay(){
 }
 
 
-
+// Click on the start quiz button
 $(".start-quiz").on("click", function() {
     startTimer();
     $("#start-page").hide();
@@ -181,6 +204,8 @@ $(".start-quiz").on("click", function() {
 
 });
 
+
+// Click on buttons to answer question
 $(".btn-secondary").on("click", function(event){
     
     if(event.target.textContent === currentAnswer) {
@@ -195,6 +220,7 @@ $(".btn-secondary").on("click", function(event){
     }
 });
 
+// Click on replay button
 $(".replay").on("click", replay);
     
     

@@ -21,14 +21,11 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-   
-
 }
 
 .card {
     width: 600px;
     height: 400px;
-
 }
 
 #question-body { 
@@ -48,6 +45,15 @@ h1 {
 
 #question {
     text-align: left;
-
 }
 
+.btn-secondary { 
+    background-color: white;
+    color: black;
+
+}
+/* .btn-secondary:focus {
+    outline: none;
+    box-shadow: none;
+    background-color: white;
+  } */
