@@ -17,7 +17,7 @@ var answer =    [   "src",
 
 var questionOrder = [ false, false, false, false, false, false, false, false, false, false];
 
-var highScores = {}; 
+// var highScores = []; 
 
 
 var secondsTotal = 120;
@@ -30,13 +30,19 @@ var currentAnswer;
 var questionCount = 0; 
 
 //input asking for player name, append name and score to object store object in storage
-var user_name = $(); // Addd input to html
+var userName; // Addd input to html
 var minutesDisplay = $(".minutes-display");
 var secondsDisplay = $(".seconds-display");
 
+
+var highScores = JSON.parse(localStorage.getItem("highScores"));
+if(highScores === null){
+    highScores = []; 
+}
+
 // set highscores object using local storage set (JSON methods as well string to obejct)
 
-
+console.log(highScores)
 
 function questionIndex(){
     return Math.ceil(Math.random()* 10);
@@ -83,6 +89,22 @@ function startTimer(){
 
 }
 
+function scoreList(){
+    
+    highScores.sort(function(a, b) {
+        return b[1] - a[1];
+});
+    console.log(highScores)
+
+    for(var i = 0 ; i < 5; i ++){
+        var userID = "#user-" + i + 1;
+        var scoreID = "#score-" + i + 1;
+        $(userID).text(highScores[i][0]);
+        $(scoreID).text(highScores[i][1]);
+    }
+
+}
+
 function populateQuestion() {
 
     var index; 
@@ -103,45 +125,49 @@ function populateQuestion() {
     }
     else {
         $("#question-body").hide();
-        $("#start-page").show();
+        $("#highScores").show();
         $(".score").text("0");
-        highScores.append(user_name, score);
 
+        highScores.push([userName, score]);
+
+        localStorage.setItem("highScores", JSON.stringify(highScores));
+        scoreList();
 
     }  
-  
     questionCount += 1; 
 
 }
 
 
 
+$(".start-quiz").on("click", function() {
+    startTimer();
+    $("#start-page").hide();
+    populateQuestion();
+    $("#question-body").show();
+    userName = $("#user-name").val();
+    console.log(userName);
 
+});
 
-    $(".start-quiz").on("click", function() {
-        startTimer();
-        $("#start-page").hide();
+$(".btn-secondary").on("click", function(event){
+    
+    if(event.target.textContent === currentAnswer) {
+        score += 10; 
+        $(".score").text(score)
         populateQuestion();
-        $("#question-body").show();
-
-    });
-
-    $(".btn-secondary").on("click", function(event){
-        
-        if(event.target.textContent === currentAnswer) {
-            populateQuestion();
-            score += 10; 
-            $(".score").text(score)
-        }
-        else {
-            isNotCorrect = true; 
-            score -= 5; 
-            $(".score").text(score)
-
-        }
     }
-    );
+    else {
+        isNotCorrect = true; 
+        score -= 5; 
+        $(".score").text(score)
+
+    }
+}
+);
+
+    
+    
 
 
-// $(".start-quiz").on("click", startTimer);
 
