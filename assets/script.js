@@ -48,6 +48,7 @@ var score = 0;
 var currentAnswer; 
 var questionCount = 0; 
 
+
 //HTML variables
 var userName; 
 var minutesDisplay = $(".minutes-display");
@@ -224,15 +225,15 @@ $(".replay").on("click", replay);
 
 //Reset the list of highest scores
 $(".resetHighest").on("click", function(){
-    localStorage.setItem("highScores", "");
-    highScores = []; 
+    highScores = [];
+    localStorage.setItem("highScores", JSON.stringify(highScores));
     for(var i = 0 ; i < 5; i ++) {
         var a = i + 1; 
         var userID = "#user-" + a;
         var scoreID = "#score-" + a;
 
-        $(userID).text(localStorage.getItem("highScores"));
-        $(scoreID).text(localStorage.getItem("highScores"));
+        $(userID).text("");
+        $(scoreID).text("");
     }
 });
 
