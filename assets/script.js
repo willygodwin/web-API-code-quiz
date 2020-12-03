@@ -124,7 +124,7 @@ function scoreList(){
         $(userID).text(highScores[i][0]);
         $(scoreID).text(highScores[i][1]);
     }
-    $("#user-score").text(score);
+    
 
 }
 
@@ -135,6 +135,7 @@ function quizEnd(){
 
     //hide the questions and show the highest scores
     $("#question-body").hide();
+    $("#user-score").text(score);
     $("#highScores").show();
     $(".replay").show();
     $(".resetHighest").show();
