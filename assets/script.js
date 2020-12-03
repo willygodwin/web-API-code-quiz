@@ -97,8 +97,11 @@ function scoreList(){
     console.log(highScores)
 
     for(var i = 0 ; i < 5; i ++){
-        var userID = "#user-" + i + 1;
-        var scoreID = "#score-" + i + 1;
+        var a = i + 1; 
+        var userID = "#user-" + a;
+        var scoreID = "#score-" + a;
+        console.log(userID);
+        console.log(scoreID)
         $(userID).text(highScores[i][0]);
         $(scoreID).text(highScores[i][1]);
     }
