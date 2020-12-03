@@ -53,25 +53,43 @@
 
      <main class="container ml-auto" > 
         <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col col-md-12" >
-                                <h1>Click the button below to start the quiz!</h1>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row start">
-                            
-                            <button type="button" class="btn btn-primary start-quiz">Start Quiz!</button>
-                        </div>
-                        
-                        </div>
-                        
+          <div class="card">
+            <div class="card-body">
+
+              <div id="start-page">
+                <div class="row">
+                    <div class="col col-md-12" >
+                        <h1>Click the button below to start the quiz!</h1>
                     </div>
                 </div>
-            </div>
+                <br>
+                <div class="row start">
+                  <button type="button" class="btn btn-primary start-quiz">Start Quiz!</button>
+                </div>
+              </div>
+
+              <div id="question-body">
+                <div class="col col-md-12" >
+                  <h4 id="question">Which of the following Attribute is used to include External JS code inside your HTML Document</h4>
+                </div>
+                <br>
+                <ul class="list-group">
+                  <button type="button" class="btn btn-secondary" id="button-a">a.</button>
+                  <br>
+                  <button type="button" class="btn btn-secondary" id="button-b">b.</button>
+                  <br>
+                  <button type="button" class="btn btn-secondary" id="button-c">c.</button>
+                  <br>
+                  <button type="button" class="btn btn-secondary" id="button-d">d.</button>
+                </ul>
+              </div>
+
+
+            </div>      
+          </div>
+        </div>
+      </main>
             
-            <script src="assets/script.js"></script>
+      <script src="assets/script.js"></script>
 </body>
 </html>

@@ -23,3 +23,16 @@ h1 {
     height: 400px;
 
 }
+
+#question-body { 
+    display: none;}
+
+.btn-secondary {
+    text-align: left;
+}
+
+#question {
+    text-align: left;
+
+}
+

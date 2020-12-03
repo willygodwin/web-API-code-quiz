@@ -21,6 +21,7 @@ var secondsTotal = 120;
 var timePenalty = 10;
 var secondsElapsed = 0;
 var isNotCorrect = false; 
+var isCorrect = false; 
 
 var minutesDisplay = document.querySelector(".minutes-display");
 var secondsDisplay = document.querySelector(".seconds-display");
@@ -74,7 +75,19 @@ function startTimer(){
 
 }
 
-document.querySelector(".start-quiz").addEventListener("click", startTimer)
+function populateQuestion() {
+    
+
+}
+
+
+
+    $(".start-quiz").on("click", function() {
+        startTimer();
+        $("#start-page").hide();
+        $("#question-body").show();
+    });
+
 
 // $(".start-quiz").on("click", startTimer);
 
